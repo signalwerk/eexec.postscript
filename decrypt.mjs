@@ -24,7 +24,7 @@ function decryptEexec(encodedString) {
 }
 
 export function decryptText(originalText) {
-  const startMarker = "eexec";
+  const startMarker = "currentfile eexec";
   const endMarker = "cleartomark";
   const startIndex = originalText.indexOf(startMarker) + startMarker.length;
   const endIndex = originalText.indexOf(endMarker, startIndex);
@@ -40,5 +40,15 @@ export function decryptText(originalText) {
     throw new Error("Invalid encrypted data length.");
   }
 
-  return decryptEexec(encryptedData);
+  const decryptedData = decryptEexec(encryptedData);
+
+  // Replace the encrypted part with the decrypted part
+  const result =
+    originalText.substring(0, startIndex) +
+    "\n" +
+    decryptedData +
+    "\n" +
+    originalText.substring(endIndex);
+
+  return result;
 }
