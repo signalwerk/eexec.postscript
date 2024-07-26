@@ -17,3 +17,9 @@ To get readable commands in Type 1 fonts out of the binary part, you can use the
 ```sh
 node char-decrypt.mjs <input-file.ps> <output-file.ps>
 ```
+
+## Other Resources
+
+- [Bill Casselman · Notes on reading Adobe font files](https://personal.math.ubc.ca/~cass/piscript/type1.pdf)
+- [pscrypt · encryption/decryption algorithm](https://github.com/9fans/plan9port/blob/master/src/cmd/postscript/misc/pscrypt.c)
+- [T1utils](https://github.com/kohler/t1utils)
