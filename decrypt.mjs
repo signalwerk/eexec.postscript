@@ -37,20 +37,18 @@ export function decryptText(originalText) {
     throw new Error("eexec data not found or invalid in the text.");
   }
 
-
   // Find the actual start of the encrypted data
   let dataStartIndex = startMarkerIndex + startMarker.length;
   while (dataStartIndex < endIndex) {
-      const char = originalText[dataStartIndex];
-      if (char !== '\n' && char !== '\r' && char !== ' ' && char !== '\t') {
-          break;
-      }
-      dataStartIndex++;
+    const char = originalText[dataStartIndex];
+    if (char !== "\n" && char !== "\r" && char !== " " && char !== "\t") {
+      break;
+    }
+    dataStartIndex++;
   }
 
   // let encryptedData = originalText.substring(dataStartIndex + 6, endIndex)
-  let encryptedData = originalText.substring(dataStartIndex, endIndex)
-
+  let encryptedData = originalText.substring(dataStartIndex, endIndex);
 
   // Determine if the encrypted data is hex-encoded or binary-encoded
   const firstFourChars = encryptedData.substring(0, 4);
@@ -78,10 +76,7 @@ export function decryptText(originalText) {
   const endDecryptedIndex = decryptedData.indexOf(endDecryptedMarker);
 
   if (endDecryptedIndex !== -1) {
-    decryptedData = decryptedData.substring(
-      0,
-      endDecryptedIndex 
-    );
+    decryptedData = decryptedData.substring(0, endDecryptedIndex);
   }
 
   // Replace the encrypted part with the decrypted part
