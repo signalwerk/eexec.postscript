@@ -1,7 +1,3 @@
-// if you get gibberish text in the output file,
-// try ignoring the first 4 characters of the decrypted data
-// → in decryptEexec; return decrypt(decoded.slice(4));
-
 import fs from "fs";
 import { decryptText } from "./decrypt.mjs";
 
@@ -14,14 +10,15 @@ if (!inputFilePath || !outputFilePath) {
 }
 
 function processFile(inputFilePath, outputFilePath) {
-  fs.readFile(inputFilePath, "utf8", (err, data) => {
+  // Read the file as a binary buffer
+  fs.readFile(inputFilePath, (err, data) => {
     if (err) {
       console.error("Error reading the file:", err);
       return;
     }
 
     try {
-      const decryptedData = decryptText(data);
+      const decryptedData = decryptText(data.toString('binary'));
       fs.writeFile(outputFilePath, decryptedData, (err) => {
         if (err) {
           console.error("Error writing the decrypted data to the file:", err);
