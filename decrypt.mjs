@@ -1,3 +1,7 @@
+// try ignoring the first 4 characters of the decrypted data
+const ignoreFirstNCharacters = 4;
+
+
 function hexDecode(str) {
   let result = "";
   for (let i = 0; i < str.length; i += 2) {
@@ -26,7 +30,8 @@ function decryptEexec(encodedString) {
 export function decryptText(originalText) {
   const startMarker = "currentfile eexec";
   const endMarker = "cleartomark";
-  const startIndex = originalText.indexOf(startMarker) + startMarker.length;
+  const startMarkerIndex = originalText.indexOf(startMarker);
+  const startIndex = startMarkerIndex + startMarker.length;
   const endIndex = originalText.indexOf(endMarker, startIndex);
 
   if (startIndex < 0 || endIndex < 0 || startIndex >= endIndex) {
@@ -40,11 +45,11 @@ export function decryptText(originalText) {
     throw new Error("Invalid encrypted data length.");
   }
 
-  const decryptedData = decryptEexec(encryptedData);
+  const decryptedData = decryptEexec(encryptedData).slice(ignoreFirstNCharacters);
 
   // Replace the encrypted part with the decrypted part
   const result =
-    originalText.substring(0, startIndex) +
+    originalText.substring(0, startMarkerIndex) +
     "\n" +
     decryptedData +
     "\n" +
